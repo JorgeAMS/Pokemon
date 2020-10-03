@@ -1,13 +1,11 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from django.http import JsonResponse
+
 import requests     
 from .models import pokemon, basestats, evolutions
+
 # Create your views here.
-
-class GEtPokeInfo():
-    pass
-
-
 
 class MainView(TemplateView):
     template_name = "pokeinfo/index.html"
@@ -104,3 +102,20 @@ class MainView(TemplateView):
             'id':id,
             'evolutions': evo_chain,
         })
+
+class ServiceView(TemplateView):
+    def get(self, request):
+        pokemon_name = str(request.GET.get('name'))
+        #pokemon_name = name
+
+        return JsonResponse({
+                'name': pokemon_name,
+            })
+    def post(self, request, name):
+        #pokemon_name = str(request.GET.get('name'))
+        pokemon_name = name
+
+        return JsonResponse({
+                'name': pokemon_name,
+            })
+ 

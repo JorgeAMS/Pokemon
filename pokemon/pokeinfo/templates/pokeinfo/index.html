@@ -6,7 +6,6 @@
     <title>Document</title>
 </head>
 <body>
-    <span>Hello world!!!</span>
     <div>
         <form action="{% url 'pokeinfo:mainview' %}" method="POST">
             {% csrf_token %}
@@ -42,6 +41,13 @@
             </tr>
         </table>
     </div>
-    
+    <hr>
+    <div>
+        <form action="{% url 'pokeinfo:webservice' %}" method="GET">
+            <input type="text" name="name">
+            <button type="submit">Go</button>
+        </form>
+    </div>
+
 </body>
 </html>
