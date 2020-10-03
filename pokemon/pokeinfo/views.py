@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 import requests     
-
+from .models import pokemon, basestats, evolutions
 # Create your views here.
 
 class GEtPokeInfo():
@@ -13,9 +13,24 @@ class MainView(TemplateView):
     template_name = "pokeinfo/index.html"
 
     def get(self, request):
+        print("######################")
+        print(basestats.objects.all())
+        print("######################")
         return render (request, self.template_name)
 
     def post(self, request):
+
+        exists = True
+        name = ""
+        evo1 = ""
+        evo2 = ""
+        evo3 = ""
+        height = 0
+        weight = 0
+        stats = ""
+        stats_name = ""
+        evo_chain = ""
+
         id = str(request.POST.get('pokeid'))
         name_url = "https://pokeapi.co/api/v2/evolution-chain/"+id+"/"
         wh_url = "https://pokeapi.co/api/v2/pokemon/"+id+"/"
@@ -26,6 +41,7 @@ class MainView(TemplateView):
             if name_response.status_code == 200:
                 name = name_response.json().get('chain')['species']['name']
             else:
+                exists = False
                 print("Id not found at {}, please check.".format(name_url))
 
             wh_response = requests.request("GET", wh_url)
@@ -33,32 +49,43 @@ class MainView(TemplateView):
                 height = wh_response.json().get('height')
                 weight = wh_response.json().get('weight')
                 stats = wh_response.json().get('stats')
-                stats_name = ""
-                for stat in stats:
-                    stats_name = stats_name + stat.get('stat')['name'] + ", "
             else:
+                exists = False
                 print("Id not found at {}, please check.".format(wh_url))   
 
-            # chain -> species -> name
-            # chain -> envolves_to -> species -> name
-            # chain -> envolves_to -> envolves_to -> species -> name
+            if exists:
+                try:
+                    pokemon.objects.get_or_create(id=id, name=name, height=height, weight=weight)
+                    for stat in stats:
+                        try:
+                            print("Created stat: {}".format(stat.get('stat')['name']))
+                            basestats.objects.get_or_create(poke_id=pokemon(id=id), stat=stat.get('stat')['name'])
+                        except Exception as e:
+                            print("Couldn't create object due to: {}".format(e))
+                except Exception as e:
+                    print("Couldn't create object due to: {}".format(e))
+
+                for stat in stats:
+                    stats_name = stats_name + stat.get('stat')['name'] + ", "
 
             evo_response = requests.request("GET", evo_url)
             if evo_response.status_code == 200:
-                #evolution_chain = evo_response.json().get('chain')['species'] + " -> " +  evo_response.json().get('chain')['envolves_to']['species']['name'] + " -> " + evo_response.json().get('chain')['envolves_to']['envolves_to']['species']['name'] 
-                evo1 = ""
-                evo2 = ""
-                evo3 = ""
                 try:
-                    evo1 = evo_response.json().get('chain')['species']['name'] + " -> "
+                    evolution1 = evo_response.json().get('chain')['species']['name']
+                    evo1 = evolution1 + " -> "
+                    evolutions.objects.get_or_create(poke_id=pokemon(id=id), evolution_secuence=1, evolution=evolution1)
+
                 except:
                     pass
                 try:
-                    evo2 = evo_response.json().get('chain')['evolves_to'][0]['species']['name'] + " -> "
+                    evolution2 = evo_response.json().get('chain')['evolves_to'][0]['species']['name']
+                    evo2 = evolution2 + " -> "
+                    evolutions.objects.get_or_create(poke_id=pokemon(id=id), evolution_secuence=2, evolution=evolution2)
                 except:
                     pass
                 try:
                     evo3 = evo_response.json().get('chain')['evolves_to'][0]['evolves_to'][0]['species']['name']
+                    evolutions.objects.get_or_create(poke_id=pokemon(id=id), evolution_secuence=3, evolution=evo3)
                 except:
                     pass
                 
