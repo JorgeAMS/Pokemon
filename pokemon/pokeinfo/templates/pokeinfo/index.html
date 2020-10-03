@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span>Hello world!!!</span>
+    <div>
+        <form action="{% url 'pokeinfo:mainview' %}" method="POST">
+            {% csrf_token %}
+            <input id="pokeid" name="pokeid" type="number" required>
+            <button type="submit">Search</button>
+        </form>
+    </div>
+    <div>
+        <table>
+            <tr>
+                <td>Name:</td>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <td>Base Stats:</td>
+                <td>{{ base_stats }}</td>
+            </tr>
+            <tr>
+                <td>Height:</td>
+                <td>{{ height }}</td>
+            </tr>
+            <tr>
+                <td>Weight:</td>
+                <td>{{ weight }}</td>
+            </tr>
+            <tr>
+                <td>Id:</td>
+                <td>{{ id }}</td>
+            </tr>
+            <tr>
+                <td>Evolutions:</td>
+                <td>{{ evolutions }}</td>
+            </tr>
+        </table>
+    </div>
+    
+</body>
+</html>
