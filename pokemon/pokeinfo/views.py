@@ -128,4 +128,3 @@ class ServiceView(TemplateView):
                 "base_stats":stats_list,
                 "evolutions":evo_dict,
             })
- 

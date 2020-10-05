@@ -1,50 +1,59 @@
+
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>PokéAPI - Test</title>
+    
+    <link rel="stylesheet" href="{% static 'pokeinfo/styles.css' %}">
+    <link rel="icon" href="{% static 'pokeinfo/pokeico.ico' %}" sizes="16x16" type=image/png>
 </head>
 <body>
-    <div>
-        <form action="{% url 'pokeinfo:mainview' %}" method="POST">
-            {% csrf_token %}
-            <input id="pokeid" name="pokeid" type="number" required>
-            <button type="submit">Search</button>
-        </form>
+    <div class="container left">
+        <p>PokéAPI Request</p>
+        <div>
+            <form action="{% url 'pokeinfo:mainview' %}" method="POST">
+                {% csrf_token %}
+                <input id="pokeid" name="pokeid" type="number" placeholder="ID" required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <div>
+            <table>
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ name }}</td>
+                </tr>
+                <tr>
+                    <td>Base Stats:</td>
+                    <td>{{ base_stats }}</td>
+                </tr>
+                <tr>
+                    <td>Height:</td>
+                    <td>{{ height }}</td>
+                </tr>
+                <tr>
+                    <td>Weight:</td>
+                    <td>{{ weight }}</td>
+                </tr>
+                <tr>
+                    <td>Id:</td>
+                    <td>{{ id }}</td>
+                </tr>
+                <tr>
+                    <td>Evolutions:</td>
+                    <td>{{ evolutions }}</td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div>
-        <table>
-            <tr>
-                <td>Name:</td>
-                <td>{{ name }}</td>
-            </tr>
-            <tr>
-                <td>Base Stats:</td>
-                <td>{{ base_stats }}</td>
-            </tr>
-            <tr>
-                <td>Height:</td>
-                <td>{{ height }}</td>
-            </tr>
-            <tr>
-                <td>Weight:</td>
-                <td>{{ weight }}</td>
-            </tr>
-            <tr>
-                <td>Id:</td>
-                <td>{{ id }}</td>
-            </tr>
-            <tr>
-                <td>Evolutions:</td>
-                <td>{{ evolutions }}</td>
-            </tr>
-        </table>
-    </div>
-    <hr>
-    <div>
+    <div class="container right">
+        <p>WebService</p>
         <form action="{% url 'pokeinfo:webservice' %}" method="GET">
-            <input type="text" name="name">
+            <input type="text" name="name" placeholder="Pokemon name" required>
             <button type="submit">Go</button>
         </form>
     </div>

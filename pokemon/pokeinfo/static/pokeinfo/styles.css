@@ -1,0 +1,58 @@
+body{
+    margin: 0;
+    width: 100%;
+    font-family: Tahoma, Geneva, sans-serif;
+    background-image: url("pokebg.jpg");
+    display: block;
+    background-repeat:no-repeat;
+    background-size:cover;
+}
+
+
+.container{
+    width: 50%;
+    margin-left: 10%;
+    background-color: rgba(238, 238, 238, 0.849);
+    height: auto;
+    border-radius: 15px;
+    padding-top: 1%;
+    padding-bottom: 2%;
+}
+.right{
+    margin-top: 5vh;
+}
+.left{
+    margin-top: 15vh;
+}
+
+.container p{
+    margin-top: 2%;
+    width: 50%;
+    margin-left: 25%;
+    text-align: center;
+    font-weight: bold;
+}
+.container form{
+    width: 40%;
+    margin-left: 30%;
+    padding: auto;
+}
+.container input{
+    border-radius: 5px;
+    border: 0px;
+}
+.container button{
+    background-color: rgb(179, 0, 0);
+    color: #ffffff;
+    border: 0px solid black;
+    border-radius: 5px;
+}
+.container table{
+    position: static;
+    width: 70%;
+    margin-left: 15%;
+    margin-top: 5%;
+}
+.container table td{
+    min-width: 100px;
+}
