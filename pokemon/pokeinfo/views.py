@@ -120,8 +120,6 @@ class ServiceView(TemplateView):
         for evo in evolutions_data:
             evo_dict.update( {evo.evolution_secuence:evo.evolution} )
 
-        #print(stats_data)
-
         return JsonResponse({
                 'name': pokemon_name,
                 'height':data.height,
@@ -129,20 +127,5 @@ class ServiceView(TemplateView):
                 "id":data.id,
                 "base_stats":stats_list,
                 "evolutions":evo_dict,
-            })
-
-    def post(self, request, name):
-        #pokemon_name = str(request.GET.get('name'))
-        pokemon_name = name
-        data = pokemon.objects.get(name=pokemon_name)
-        stats_data = basestats.objects.get(poke_id=data.id)
-
-        print(stats_data)
-
-        return JsonResponse({
-                'name': pokemon_name,
-                'height':data.height,
-                "weight":data.weight,
-                "id":data.id,
             })
  
