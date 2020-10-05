@@ -2,7 +2,8 @@
 Django app to make request to [PokéAPI](https://pokeapi.co/docs/v2).
 
 ## Usage
-PokéAPI Request section just require you to put an ID and it will show you the data, and store it in an SQLite database
+PokéAPI Request section just require you to put an ID and it will show you the data and store it in an SQLite database.
+
 WebService Section will ask you for a Pokemon name and consult the data on the database mentioned above, you can make requests by:
 
 ```
