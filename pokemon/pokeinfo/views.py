@@ -106,16 +106,43 @@ class MainView(TemplateView):
 class ServiceView(TemplateView):
     def get(self, request):
         pokemon_name = str(request.GET.get('name'))
-        #pokemon_name = name
+        data = pokemon.objects.get(name=pokemon_name)
+        stats_data = basestats.objects.filter(poke_id=data.id)
+        evolutions_data = evolutions.objects.filter(poke_id=data.id)
+
+        stats_list = []
+        evo_dict = {}
+        counter = 0
+        
+        for stat in stats_data:
+            stats_list.append(stat.stat)
+        
+        for evo in evolutions_data:
+            evo_dict.update( {evo.evolution_secuence:evo.evolution} )
+
+        #print(stats_data)
 
         return JsonResponse({
                 'name': pokemon_name,
+                'height':data.height,
+                "weight":data.weight,
+                "id":data.id,
+                "base_stats":stats_list,
+                "evolutions":evo_dict,
             })
+
     def post(self, request, name):
         #pokemon_name = str(request.GET.get('name'))
         pokemon_name = name
+        data = pokemon.objects.get(name=pokemon_name)
+        stats_data = basestats.objects.get(poke_id=data.id)
+
+        print(stats_data)
 
         return JsonResponse({
                 'name': pokemon_name,
+                'height':data.height,
+                "weight":data.weight,
+                "id":data.id,
             })
  
