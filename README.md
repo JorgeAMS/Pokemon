@@ -13,7 +13,7 @@ Example:
 http://localhost:8080/poke_service/?name=magnemite
 ```
 
-Which will returns a Json formatted data, such as:
+Which will return a Json formatted data, such as:
 ```json
 {
     "name": "magnemite",
@@ -37,3 +37,9 @@ Which will returns a Json formatted data, such as:
 ```
 ## Important
 Web Service only will return data about pokemon previously requested by ID in the PokéAPI Request section.
+
+## Requirements
+Do not forget to install pip packages needed from the requirements file.
+```
+pip install -r requirements.txt
+```
